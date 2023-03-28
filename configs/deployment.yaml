@@ -1,0 +1,40 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: admission-controller
+  namespace: admission-namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: admission-controller
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: admission-controller
+    spec:
+      containers:
+        - name: admission-controller
+          image: >-
+            image-registry.openshift-image-registry.svc:5000/admission-namespace/admission-controller:latest
+          ports:
+            - containerPort: 8443
+              protocol: TCP
+          volumeMounts:
+          - name: ingress-admission-webhook-tls
+            mountPath: /opt/app-root/tls/
+            readOnly: true
+          env:
+            - name: issuer
+              value: googlecasclusterissuer-sample
+            - name: issuer-group
+              value: cas-issuer.jetstack.io
+            - name: issuer-kind
+              value: GoogleCASClusterIssuer
+      serviceAccountName: admission-sa
+      serviceAccount: admission-sa
+      volumes:
+      - name: ingress-admission-webhook-tls
+        secret: 
+          secretName: ingress-admission-webhook-tls

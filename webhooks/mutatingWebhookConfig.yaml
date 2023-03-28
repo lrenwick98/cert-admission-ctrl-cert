@@ -1,0 +1,24 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: MutatingWebhookConfiguration
+metadata:
+  name: "ingress-admission-webhook.openshift.io"
+  annotations: 
+    service.beta.openshift.io/inject-cabundle: "true"
+webhooks:
+- name: "ingress-admission-webhook.openshift.io"
+  reinvocationPolicy: IfNeeded
+  rules:
+  - apiGroups:   ["networking.k8s.io"]
+    apiVersions: ["v1"]
+    operations:  ["CREATE","UPDATE"]
+    resources:   ["ingresses"]
+    scope:       "*"
+  clientConfig:
+    service:
+      namespace: "admission-namespace"
+      name: "admission-controller"
+      path: /mutate
+      port: 8443
+    caBundle:
+  admissionReviewVersions: ["v1", "v1beta1"]
+  sideEffects: None
