@@ -6,9 +6,9 @@ ENV PATH="${PATH}:/opt/app-root/src/go/bin/"
 COPY ./ .
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o .
 FROM ubi8/ubi-minimal
-COPY --from=builder  /opt/app-root/src/admctrl/admission-controller /usr/bin/
+COPY --from=builder  /opt/app-root/src/admctrl/admission-controller-certificate /usr/bin/
 USER 1001
 EXPOSE 8080 8443
-CMD ["/usr/bin/admission-controller"]
-ENTRYPOINT ["/usr/bin/admission-controller"]
+CMD ["/usr/bin/admission-controller-certificate"]
+ENTRYPOINT ["/usr/bin/admission-controller-certificate"]
 

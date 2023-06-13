@@ -122,11 +122,8 @@ func main() {
 	// Setting 2 variable which are defined by an empty struct for each of the function depending on the URL path
 	// the http request is calling
 	// in our example we have 2 paths , one for the mutate and one for validate
-	mu := myServerHandler{}
 	va := myServerHandler{}
 	mux := http.NewServeMux()
-	// Setting a function reference for the /mutate URL
-	mux.HandleFunc("/mutate", mu.mutserve)
 	// Setting a function reference for the /validate URL
 	mux.HandleFunc("/validate", va.valserve)
 	server.Handler = mux

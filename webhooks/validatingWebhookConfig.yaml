@@ -1,16 +1,16 @@
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
 metadata:
-  name: "ingress-admission-webhook.openshift.io"
+  name: "cert-admission-webhook.openshift.io"
   annotations: 
     service.beta.openshift.io/inject-cabundle: "true"
 webhooks:
-- name: "ingress-admission-webhook.openshift.io"
+- name: "cert-admission-webhook.openshift.io"
   rules:
-  - apiGroups:   ["networking.k8s.io"]
+  - apiGroups:   ["cert-manager.io"]
     apiVersions: ["v1"]
     operations:  ["CREATE","UPDATE"]
-    resources:   ["ingresses"]
+    resources:   ["certificates"]
     scope:       "*"
   clientConfig:
     service:
