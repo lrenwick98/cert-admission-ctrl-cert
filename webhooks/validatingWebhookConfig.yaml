@@ -15,7 +15,7 @@ webhooks:
   clientConfig:
     service:
       namespace: "admission-namespace"
-      name: "admission-controller"
+      name: "admission-controller-certificate"
       path: /validate
       port: 8443
     caBundle:

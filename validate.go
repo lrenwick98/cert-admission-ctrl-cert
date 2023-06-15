@@ -98,16 +98,16 @@ func (gs *myServerHandler) valserve(w http.ResponseWriter, r *http.Request) {
 			if strings.Contains(dnsName, services.ObjectMeta.Name) {
 				serviceCorrect = true
 			} else {
-				errorMessage = "Make sure SAN name follows this format: <service>-<namespace>.apps." + UrlSuffix.Spec.BaseDomain
+				errorMessage = "Make sure DNS & Common name name follows this format: <service>-<namespace>.apps." + UrlSuffix.Spec.BaseDomain
 			}
 		}
 	}
 	// namespace check
-	for _, dnsName  := range obj.Spec.DNSNames {
+	for _, dnsName := range obj.Spec.DNSNames {
 		if strings.Contains(dnsName, obj.Namespace) {
 			namespaceCorrect = true
 		} else {
-			errorMessage = "Make sure SAN name follows this format: <service>-<namespace>.apps." + UrlSuffix.Spec.BaseDomain
+			errorMessage = "Make sure DNS & Common name follows this format: <service>-<namespace>.apps." + UrlSuffix.Spec.BaseDomain
 		}
 	}
 	// basedomain check
@@ -115,7 +115,7 @@ func (gs *myServerHandler) valserve(w http.ResponseWriter, r *http.Request) {
 		if strings.Contains(dnsName, UrlSuffix.Spec.BaseDomain) {
 			baseDomainCorrect = true
 		} else {
-			errorMessage = "Make sure SAN name follows this format: <service>-<namespace>.apps." + UrlSuffix.Spec.BaseDomain
+			errorMessage = "Make sure DNS & Common name follows this format: <service>-<namespace>.apps." + UrlSuffix.Spec.BaseDomain
 		}
 	}
 	// .apps. check
@@ -123,7 +123,7 @@ func (gs *myServerHandler) valserve(w http.ResponseWriter, r *http.Request) {
 		if strings.Contains(dnsName, ".apps.") {
 			appsCorrect = true
 		} else {
-			errorMessage = "Make sure SAN name follows this format: <service>-<namespace>.apps." + UrlSuffix.Spec.BaseDomain
+			errorMessage = "Make sure DNS & Common name follows this format: <service>-<namespace>.apps." + UrlSuffix.Spec.BaseDomain
 		}
 	}
 	// check length of dns names = 1

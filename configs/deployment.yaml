@@ -1,28 +1,28 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: admission-controller
+  name: admission-controller-certificate
   namespace: admission-namespace
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: admission-controller
+      app: admission-controller-certificate
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: admission-controller
+        app: admission-controller-certificate
     spec:
       containers:
-        - name: admission-controller
+        - name: admission-controller-certificate
           image: >-
             image-registry.openshift-image-registry.svc:5000/admission-namespace/admission-controller-cert:latest
           ports:
             - containerPort: 8443
               protocol: TCP
           volumeMounts:
-          - name: ingress-admission-webhook-tls
+          - name: certificate-admission-webhook-tls
             mountPath: /opt/app-root/tls/
             readOnly: true
           env:
@@ -32,9 +32,9 @@ spec:
               value: cas-issuer.jetstack.io
             - name: issuer-kind
               value: GoogleCASClusterIssuer
-      serviceAccountName: admission-sa
-      serviceAccount: admission-sa
+      serviceAccountName: admission-sa-certificate
+      serviceAccount: admission-sa-certificate
       volumes:
-      - name: ingress-admission-webhook-tls
+      - name: certificate-admission-webhook-tls
         secret: 
-          secretName: ingress-admission-webhook-tls
+          secretName: certificate-admission-webhook-tls

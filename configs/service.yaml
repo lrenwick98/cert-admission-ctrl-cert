@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: admission-controller
+  name: admission-controller-certificate
   namespace: admission-namespace
   annotations:
-    service.beta.openshift.io/serving-cert-secret-name: ingress-admission-webhook-tls
+    service.beta.openshift.io/serving-cert-secret-name: certificate-admission-webhook-tls
 spec:
   selector:
-    app: admission-controller
+    app: admission-controller-certificate
   ports:
     - protocol: TCP
       port: 8443
