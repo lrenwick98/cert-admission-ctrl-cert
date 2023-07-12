@@ -58,7 +58,7 @@ func GetConfig() (*rest.Config, error) {
 	}
 	return nil, err
 }
-
+// call logging function
 func Log() zap.SugaredLogger {
 
 	loggerConfig := zap.NewProductionConfig()
@@ -75,7 +75,7 @@ func Log() zap.SugaredLogger {
 }
 
 func main() {
-
+// Server start logs and call empty env variables which will be set
 	timestampLog := Log()
 	timestampLog.Info(fmt.Sprintf("Go Version: %s", runtime.Version()))
 	timestampLog.Info(fmt.Sprintf("Go OS/Arch: %s/%s", runtime.GOOS, runtime.GOARCH))
@@ -95,7 +95,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-
+// retrieve auth to be plugged in so logic can be executed
 	ocpclientset, err := ocp_clientset.NewForConfig(config)
 	if err != nil {
 		log.Fatal(err)

@@ -11,7 +11,17 @@ webhooks:
     apiVersions: ["v1"]
     operations:  ["CREATE","UPDATE"]
     resources:   ["certificates"]
-    scope:       "*"
+    scope:       "Namespaced"
+  namespaceSelector:
+    matchExpressions:
+      - key: kubernetes.io/metadata.name
+        operator: NotIn
+        values:
+          - kube-system
+          - default
+          - openshift-authentication
+          - openshift-default
+          - openshift-operators
   clientConfig:
     service:
       namespace: "admission-namespace"
